@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Email Confirmation</title>
+    <style>
+      body {
+        font-family: "Arial", sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+        text-align: center;
+        color: #333;
+      }
+
+      .container {
+        max-width: 600px;
+        margin: 50px auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+
+      h2 {
+        color: #007bff;
+        margin-bottom: 10px;
+      }
+
+      h5 {
+        color: #333;
+        margin-top: 10px;
+      }
+
+      p {
+        color: #666;
+        margin-top: 20px;
+      }
+
+      .line {
+        width: 50%;
+        margin: 15px auto;
+        border-top: 1px solid #ddd;
+      }
+
+      .signature {
+        font-style: italic;
+        color: #888;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h2>Hello {{ user.first_name }} {{ user.last_name }}</h2>
+      <div class="line"></div>
+      <h5>Your Account Created Successfully</h5>
+      <p>
+        Thank you for joining our Fashion_Cloth platform. We are excited to have
+        you on board!
+      </p>
+      <p class="signature">Best Regards,<br />Fashion_Cloth Management Team</p>
+    </div>
+  </body>
+</html>
