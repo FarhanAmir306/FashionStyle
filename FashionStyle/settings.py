@@ -27,10 +27,9 @@ SECRET_KEY = env('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-
 ALLOWED_HOSTS = ['*']
 CORS_ORIGIN_ALLOW_ALL = True
-# CSRF_TRUSTED_ORIGINS = [] render link hobe 
+CSRF_TRUSTED_ORIGINS = ['https://fashionstyle-qmo0.onrender.com']
 
 
 
