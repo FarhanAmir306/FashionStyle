@@ -3,28 +3,35 @@ from rest_framework import serializers
 from django.contrib.auth.models import User
 from rest_framework.authtoken.models import Token
 
-class UserSerializer(serializers.ModelSerializer):
-    confirm_password = serializers.CharField(write_only=True)
-    first_name = serializers.CharField()
-    last_name = serializers.CharField()
 
+
+class RegistrationSerializer(serializers.ModelSerializer):
+    confirm_password = serializers.CharField(required = True)
     class Meta:
         model = User
-        fields = ('id', 'username', 'first_name', 'last_name', 'email', 'password', 'confirm_password')
+        fields = ['username', 'first_name', 'last_name', 'email', 'password', 'confirm_password']
+    
+    def save(self):
+        username = self.validated_data['username']
+        first_name = self.validated_data['first_name']
+        last_name = self.validated_data['last_name']
+        email = self.validated_data['email']
+        password = self.validated_data['password']
+        password2 = self.validated_data['confirm_password']
+        
+        if password != password2:
+            raise serializers.ValidationError({'error' : "Password Doesn't Mactched"})
+        if User.objects.filter(email=email).exists():
+            raise serializers.ValidationError({'error' : "Email Already exists"})
+        account = User(username = username, email=email, first_name = first_name, last_name = last_name)
+        print(account)
+        account.set_password(password)
+        account.is_active = True
+        account.save()
+        return account
 
-    def validate(self, data):
-        # Validate if passwords match
-        if data.get('password') != data.get('confirm_password'):
-            raise serializers.ValidationError("Passwords do not match.")
-        return data
 
-    def create(self, validated_data):
-        # Remove confirm_password from the validated data
-        validated_data.pop('confirm_password', None)
 
-        user = User.objects.create_user(**validated_data)
-        Token.objects.create(user=user)
-        return user
 
     
 
