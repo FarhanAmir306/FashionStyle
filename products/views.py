@@ -77,3 +77,20 @@ class ProductDetailsAPIView(APIView):
         except Product.DoesNotExist:
             # If the product with the given pk does not exist, return a 404 response
             return Response({"error": "Product not found"}, status=status.HTTP_404_NOT_FOUND)
+        
+from rest_framework.decorators import api_view
+from django.http import JsonResponse
+@api_view(['GET'])
+def get_products_by_category(request, category_slug):
+    try:
+        category = Category.objects.get(slug=category_slug)
+       
+        products = Product.objects.filter(category=category)
+       
+        serializer = ProductSerializer(products, many=True)
+        print(serializer)
+        return Response(serializer.data)
+    except Category.DoesNotExist:
+        return JsonResponse({'error': 'Category not found'}, status=404)
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)

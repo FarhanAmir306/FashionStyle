@@ -73,3 +73,5 @@ class LogoutView(APIView):
             return Response({'message': 'Logout successful'})
         else:
             return Response({'message': 'User not authenticated'})
+
+
